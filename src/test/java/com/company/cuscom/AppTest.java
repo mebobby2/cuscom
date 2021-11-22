@@ -1,14 +1,9 @@
 package com.company.cuscom;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.*;
-
+import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -17,37 +12,28 @@ import org.junit.Test;
 public class AppTest
     extends CamelTestSupport
 {
-    static PipedInputStream in;
-    static PipedOutputStream out;
-    static InputStream originalIn;
-
-    @BeforeClass()
-    public static void setup() throws IOException {
-        // System.in is an InputStream which is typically connected to
-        // keyboard input of console programs
-        originalIn = System.in;
-        out = new PipedOutputStream();
-        in = new PipedInputStream(out);
-        System.setIn(in);
-        FileUtils.deleteDirectory(new File("test"));
-    }
-
-    @After()
-    public void tearDown() throws IOException {
-        out.close();
-        System.setIn(originalIn);
+    @Override
+    public String isMockEndpoints() {
+        return "*";
     }
 
     @Test()
     public void testAppRoute() throws Exception {
-        out.write("This is a test message!\n".getBytes());
-        Thread.sleep(2000);
-        assertTrue(new File("test").listFiles().length == 1);
+        String testMessage = "This is a test message!";
+        getMockEndpoint("mock:file:test").expectedBodiesReceived(testMessage);
+        template.sendBody("direct:in", testMessage);
+        assertMockEndpointsSatisfied();
     }
 
-    @Override
-    public boolean isCreateCamelContextPerClass() {
-        return false;
+    @Before
+    public void replaceStreamIn() throws Exception {
+        context.getRouteDefinitions().get(0).adviceWith(context,
+        new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                replaceFromWith("direct:in");
+            }
+        });
     }
 
     @Override
