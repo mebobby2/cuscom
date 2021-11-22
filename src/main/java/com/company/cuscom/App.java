@@ -1,5 +1,6 @@
 package com.company.cuscom;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.main.Main;
 
@@ -15,9 +16,9 @@ public class App
         m.addRouteBuilder(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("file:input")
-                .to("log:end?level=INFO")
-                .to("file:output");
+                from("stream:in")
+                .setHeader(Exchange.FILE_NAME, constant("test.txt"))
+                .to("file:test");
             }
         });
         m.run();

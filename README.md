@@ -1,7 +1,7 @@
 # CusCom
 
 ## Run
-mvn -q -X compile exec:java -Dexec.mainClass="com.company.cuscom.App"
+
 ## Upto
 Page 29
 
