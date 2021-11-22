@@ -13,14 +13,14 @@ public class App
     public static void main( String[] args ) throws Exception
     {
         Main m = new Main();
-        m.addRouteBuilder(new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("stream:in")
-                .setHeader(Exchange.FILE_NAME, constant("test.txt"))
-                .to("file:test");
-            }
-        });
+        m.addRouteBuilder(new AppRoute());
         m.run();
+    }
+
+    static class AppRoute extends RouteBuilder {
+        @Override
+        public void configure() throws Exception {
+            from("stream:in").to("file:test");
+        }
     }
 }
