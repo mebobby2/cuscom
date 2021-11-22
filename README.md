@@ -14,6 +14,3 @@ mvn compile test
 Page 73
 
 If you now run our Camel application, it still works as it used to
-
-Before that:
-Why the Camel Context configured via spring dsl is not picking up the camel routes

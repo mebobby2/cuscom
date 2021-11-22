@@ -1,8 +1,7 @@
 package com.company.cuscom;
 
-import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.main.Main;
+import org.apache.camel.spring.Main;
 
 /**
  * Hello world!
