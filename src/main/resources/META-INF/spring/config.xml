@@ -2,11 +2,10 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
     ">
-
-  <bean id="appRoute" class="com.company.cuscom.App.AppRoute"></bean>
-
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <routeBuilder ref="appRoute" />
+    <packageScan>
+      <package>com.company.cuscom</package>
+    </packageScan>
   </camelContext>
 
 </beans>
