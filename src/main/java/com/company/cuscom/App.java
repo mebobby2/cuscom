@@ -7,18 +7,15 @@ import org.apache.camel.spring.Main;
  * Hello world!
  *
  */
-public class App
-{
-    public static void main( String[] args ) throws Exception
-    {
-        Main m = new Main();
-        m.run();
-    }
+public class App extends RouteBuilder {
 
-    public static class AppRoute extends RouteBuilder {
-        @Override
-        public void configure() throws Exception {
-            from("stream:in").to("file:test");
-        }
-    }
+  @Override
+  public void configure() throws Exception {
+    from("file:inbound")
+      .choice()
+      .when(header("NeedsApproval").isEqualTo(true))
+      .to("jms:queue:APPROVAL")
+      .otherwise()
+      .to("seda:transform");
+  }
 }

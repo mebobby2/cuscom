@@ -55,6 +55,6 @@ A stage in SEDA is a basic unit of work. A stage consists of an incoming event q
 controller for scheduling & thread allocation.
 
 ## Upto
-Page 73
+Page 87
 
-If you now run our Camel application, it still works as it used to
+In order to work with JMS queues
