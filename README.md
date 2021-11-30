@@ -57,6 +57,6 @@ A stage in SEDA is a basic unit of work. A stage consists of an incoming event q
 controller for scheduling & thread allocation.
 
 ## Upto
-Page 122
+Page 131
 
-It should display that all tests ran successfully
+Enterprise Integration Patterns
