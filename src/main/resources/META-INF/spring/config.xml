@@ -3,18 +3,9 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
     ">
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <route>
-      <from uri="file:inbound"/>
-      <choice>
-        <when>
-          <header>NeedsApproval</header>
-          <to uri="jms:queue:APPROVAL"></to>
-        </when>
-        <otherwise>
-          <to uri="seda:transform"></to>
-        </otherwise>
-      </choice>
-    </route>
+    <packageScan>
+      <package>com.company.cuscom</package>
+    </packageScan>
   </camelContext>
 
 </beans>
