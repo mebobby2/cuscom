@@ -55,6 +55,8 @@ A stage in SEDA is a basic unit of work. A stage consists of an incoming event q
 controller for scheduling & thread allocation.
 
 ## Upto
-Page 87
+Page 122
 
-In order to work with JMS queues
+It should display that all tests ran successfully
+
+Before that: Figure out the 2 failing unit tests
