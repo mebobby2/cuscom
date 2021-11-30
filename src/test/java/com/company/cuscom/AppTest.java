@@ -7,7 +7,6 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
-import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.MockEndpoints;
@@ -46,7 +45,7 @@ public class AppTest {
         mockNeedsApproval.expectedMessageCount(1);
         mockTransform.expectedMessageCount(0);
 
-        FileCopyUtils.copy(new File("src/test/data/cusdec2.xml"), new File("inbound/cusdec2.xml"));
+        FileCopyUtils.copy(new File("src/test/data/cusdec2.xml"), new File("inbound/cusdec.xml"));
 
         mockNeedsApproval.assertIsSatisfied();
         mockTransform.assertIsSatisfied();

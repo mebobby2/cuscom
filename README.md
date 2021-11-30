@@ -6,6 +6,8 @@ mvn -q -X compile exec:java -Dexec.mainClass="com.company.cuscom.App"
 ## Run tests
 mvn compile test
 
+run specific test: mvn compile test -Dtest=NetValueBeanTest#testFileParsedHigher
+
 ## Java Notes
 * Java has four access modifiers: public, private, protected and default (no keyword).
   * The default access modifier is also called package-private, which means that all members are visible within the same package but aren't accessible from other packages
@@ -58,5 +60,3 @@ controller for scheduling & thread allocation.
 Page 122
 
 It should display that all tests ran successfully
-
-Before that: Figure out the 2 failing unit tests
