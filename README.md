@@ -55,8 +55,3 @@ n a typical application, a single unit of work is often performed within the con
 
 A stage in SEDA is a basic unit of work. A stage consists of an incoming event queue, an event handler, and an associated threadpool. Each stage also has a
 controller for scheduling & thread allocation.
-
-## Upto
-Page 131
-
-Enterprise Integration Patterns
