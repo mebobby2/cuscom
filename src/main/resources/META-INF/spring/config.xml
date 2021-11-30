@@ -8,4 +8,8 @@
     </packageScan>
   </camelContext>
 
+  <bean id="netValueBean" class="com.company.cuscom.NetValueBean">
+    <property name="approvalThreshold" value="3000" />
+  </bean>
+
 </beans>

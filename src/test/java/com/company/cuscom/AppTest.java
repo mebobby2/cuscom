@@ -1,5 +1,8 @@
 package com.company.cuscom;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
@@ -8,12 +11,15 @@ import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.MockEndpoints;
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.util.FileCopyUtils;
 
 /**
  * Unit test for simple App.
@@ -40,31 +46,32 @@ public class AppTest {
         mockNeedsApproval.expectedMessageCount(1);
         mockTransform.expectedMessageCount(0);
 
-        template.sendBodyAndHeader("direct:start", "message", "NeedsApproval", true);
+        FileCopyUtils.copy(new File("src/test/data/cusdec2.xml"), new File("inbound/cusdec2.xml"));
+
         mockNeedsApproval.assertIsSatisfied();
         mockTransform.assertIsSatisfied();
     }
 
     @DirtiesContext
     @Test
-    public void testDirectTransformMessage() throws InterruptedException {
+    public void testDirectTransformMessage() throws Exception {
         mockNeedsApproval.expectedMessageCount(0);
         mockTransform.expectedMessageCount(1);
 
-        context.createProducerTemplate().sendBodyAndHeader("direct:start", "message", "NeedsApproval", false);
+        FileCopyUtils.copy(new File("src/test/data/cusdec1.xml"), new File("inbound/cusdec.xml"));
 
         mockNeedsApproval.assertIsSatisfied();
         mockTransform.assertIsSatisfied();
     }
 
     @Before
-    public void replaceFileInbound() throws Exception {
-        context.getRouteDefinitions().get(0).adviceWith(context,
-        new AdviceWithRouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                replaceFromWith("direct:start");
-            }
-        });
+    public void setUp() {
+        MockEndpoint.resetMocks(context);
+    }
+
+    @BeforeClass
+    public static void clearInbound() throws IOException {
+        FileUtils.deleteDirectory(new File("inboud"));
+        FileUtils.forceMkdir(new File("inbound"));
     }
 }
